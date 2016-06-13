@@ -11,11 +11,11 @@ from alerta.app.utils import absolute_url, jsonify, jsonp, parse_fields, process
 from alerta.app.metrics import Timer
 from alerta.alert import Alert
 from alerta.heartbeat import Heartbeat
-from alerta.plugins import load_plugins, RejectException
+from alerta.plugins import Plugins, RejectException
 
 LOG = app.logger
 
-plugins = load_plugins()
+plugins = Plugins()
 
 # Set-up metrics
 gets_timer = Timer('alerts', 'queries', 'Alert queries', 'Total time to process number of alert queries')
