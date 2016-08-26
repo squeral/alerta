@@ -49,8 +49,9 @@ class SnsTopicPublisher(PluginBase):
         LOG.info('Sending message %s to SNS topic "%s"', alert.get_id(), self.topic_arn)
         LOG.debug('Message: %s', alert.get_body())
 
-        response = self.connection.publish(topic=self.topic_arn, message=alert.get_body())
-        LOG.debug('Response: %s', response)
+        if alert.severity != alert.previous_severity and alert.severity in ['major', 'critical']:
+            response = self.connection.publish(topic=self.topic_arn, message=alert.get_body())
+            LOG.debug('Response: %s', response)
 
     def status_change(self, alert, status, text):
         return
