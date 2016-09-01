@@ -272,7 +272,8 @@ class Mongo(object):
             "resource": alert.resource,
             "event": alert.event,
             "severity": alert.severity,
-            "customer": alert.customer
+            "customer": alert.customer,
+            "origin": alert.origin
         }
 
         return bool(self._db.alerts.find_one(query))
@@ -923,7 +924,7 @@ class Mongo(object):
         return blackouts
 
     def is_blackout_period(self, alert):
-        
+
         if alert.severity in app.config.get('BLACKOUT_ACCEPT', []):
             return False
 
@@ -1217,7 +1218,7 @@ class Mongo(object):
         if response.matched_count > 0:
             return id
         else:
-            return 
+            return
 
     def save_user(self, id, name, login, password=None, provider="", text="", email_verified=False):
 
